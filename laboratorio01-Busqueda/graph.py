@@ -131,7 +131,7 @@ for i in range(0,len(list_node_start)):
     list_node_edges = close_nodes_points(list_points[i],list_points)
     lista_node_end = busca_nodos(list_node_edges,pos)
 
-    lista_node_end = validar_conexion(list_node_start[i],lista_node_end,num_conexions,G)
+    lista_node_end = validar_conexion(list_node_start[i],lista_node_end,random.randint(1,num_conexions),G)
 
     #evaluar para no hacer doble enlace
 

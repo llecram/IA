@@ -3,28 +3,10 @@ import matplotlib.pyplot as plt
 
 
 class Node : 
-  
-    # Utility function to create a new tree node 
+
     def __init__(self ,key): 
         self.key = key  
         self.child = [] 
-
-
-class Tree:
-
-    root = None
-
-    def __init__(self):
-        root = None
-
-    def find(self,path):
-        pass
-
-    def insert(self,path):
-        if root == None:
-            root.child()
-
-
 
 
 def search_conexions(node,G):
@@ -42,47 +24,63 @@ def search_conexions(node,G):
 def printNodeLevelWise(root): 
     if root is None: 
         return 
-      
-    # create a queue and enqueue root to it 
+
     queue = [] 
     queue.append(root) 
   
-    # Do level order traversal. Two loops are used 
-    # to make sure that different levels are printed 
-    # in different lines 
     while(len(queue) >0): 
   
         n = len(queue) 
         while(n > 0) : 
   
-            # Dequeue an item from queue and print it 
             p = queue[0] 
             queue.pop(0) 
             print (p.key) 
-      
-            # Enqueue all children of the dequeued item 
+
             for index, value in enumerate(p.child): 
                 queue.append(value) 
   
             n -= 1
-        print() # Seperator between levels 
+        print()
 
 
 
-G = nx.complete_graph(7)
-"""
-nodo_inicial = 0
+G = nx.Graph()
+G.add_nodes_from(range(1,7))
+G.add_edge(0,6)
+G.add_edge(0,3)
+G.add_edge(0,5)
+G.add_edge(0,4)
+G.add_edge(1,2)
+G.add_edge(1,4)
+G.add_edge(2,3)
+G.add_edge(2,5)
+G.add_edge(2,4)
+G.add_edge(5,4)
+G.add_edge(5,6)
 
-root = Node(nodo_inicial)
-root_start = root
+def buscar_nodo(camino,raiz):
 
-path = []
-list_conexions = search_conexions(nodo_inicial,G)
+    root_temp = raiz
 
-for nodo in list_conexions:
-    root.child.append(Node(nodo))
-"""
-def generate_tree(G,nodo_inicial,nodo_obj):
+    if len(camino) == 1:
+        return raiz
+
+    i=1
+    while i < len(camino):   
+        e=0
+        while e < len(root_temp.child):
+            if camino[i] == root_temp.child[e]:
+                root_temp = root_temp.child[e]
+                
+            e +=1
+        
+        i += 1
+
+    return root_temp
+
+
+def generate_tree(G,nodo_inicial):
     path = []
     level = []
 
@@ -91,62 +89,108 @@ def generate_tree(G,nodo_inicial,nodo_obj):
     path.append(root)
     level.append(root)
     
-    list_conexions = search_conexions(nodo_inicial,G)
-
-    if len(list_conexions) != 0:
-        for nodo in list_conexions:
-            root.child.append(Node(nodo))
-
     root_temp = root
-    while len(level) != 0:
-        
 
+    while len(path) != 0:
         
-        if len(search_conexions(level))
+        if len(level) == 0:
+            break
 
-        for index in range(0,len(root_temp.child)):
+        ### Verfica conexiones de nodo actual ####
+        
+        list_conexions = search_conexions(level.pop().key,G)
+
+        ### Verifica que existan conexiones ###
+
+        if len(list_conexions) != 0:
             
+            ### Si hay mas nodos se borran los nodos conectados que estan presentes en el camino y asi evitar bucles ###
+
+            if len(path)-1 != 0:
+                
+                ### Evita que cuente el nodo actual y asi evite ciclo del mismo nodo ###
+                
+                for i in range(0,len(path)):  ### len(path)-1 antes
+                    for nodo in list_conexions:
+                        if nodo == path[i].key:
+                            list_conexions.remove(nodo)          
+
+            ### Si no hay nodos conectados para insertar ###
+
+            if len(list_conexions) == 0:
+                
+                for i in range(0,len(path)):
+                    print("camino fuera bucle: ",path[i].key)
+                print()
+
+                level.append(path.pop())
+                
+                ### retorna nodo padre del nodo actual ###
+                
+                root_temp = buscar_nodo(path,root)
+                
+                subida = False
+    
+                while True:
+                    
+                    for i in range(0,len(root_temp.child)):
+                        ### Evalua que el nodo padre solo tenga un hijo para buscar padre de ese nodo ###
+
+                        if i+1 == len(root_temp.child):
+                            subida = True
+                            break     
+                        
+                        ### Evalua que el nodo padre tenga mas hijos para trabajar con nodo hijo siguiente ###
+
+                        elif root_temp.child[i] == level[0]:
+
+                            path.append(root_temp.child[i+1])
+                            level.pop()
+                            level.append(root_temp.child[i+1])
+                            root_temp = root_temp.child[i+1]
+                            subida = False
+                            break
+
+                    ### Se busca un nuevo nodo padre ###
+
+                    if subida == True:
+
+                        level.pop()
+                        level.append(path.pop())
+
+                        if len(path) == 0:
+                            subida = False
+                            break         
+
+                        root_temp = buscar_nodo(path,root)
+
+                    ### Ya se trabaja con el nodo con el flujo normal ###
+
+                    elif subida == False:
+                        break
+ 
+                print("sali del bucle while padre")
+
+            ### Si hay nodos conectados para insertar ###
+
+            else:
+                print("nodo crea hijos: ",root_temp.key)
+                for nodo in list_conexions:
+                    root_temp.child.append(Node(nodo))
+                
+                path.append(root_temp.child[0])
+                level.append(root_temp.child[0])
+
+                root_temp = root_temp.child[0]
 
 
     return root
 
 
 
-
-path = []
-
-root = Node(0)
-root_start = root
-
-path.append(root)
-
-list_conexions = search_conexions(nodo_inicial,G)
-
-if len(list_conexions) != 0:
-    for nodo in list_conexions:
-        root.child.append(Node(nodo))
+tree_root = generate_tree(G,0)
 
 
-root_temp = root_start
-
-root.child.append(Node(1))
-root.child.append(Node(2))
-root.child.append(Node(3))
-root.child.append(Node(4))
-root = root_temp.child[0]
-root.child.append(Node(5))
-root.child.append(Node(6))
-root.child.append(Node(7))
-root = root_temp.child[0]
-root.child.append(Node(5))
-root.child.append(Node(6))
-root.child.append(Node(7))
-root = root_temp.child[1]
-root.child.append(Node(5))
-root.child.append(Node(6))
-root.child.append(Node(7))
-
-printNodeLevelWise(root_start)
 
 """
 nodo_inicial = 0
