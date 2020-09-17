@@ -68,8 +68,8 @@ def buscar_nodo(camino,raiz):
 
 def generate_tree(G,nodo_inicial):
 
-    print("...arbol de estados generado")
-    
+    print("...arbol de estados generando")
+
     path = []
     level = []
 
