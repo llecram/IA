@@ -4,12 +4,12 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
-
+""" Distancia entre dos puntos """
 def distance(point1,point2):
     d = math.sqrt(math.pow(point1[0]-point2[0],2)+math.pow(point1[1]-point2[1],2))
     return d
 
-
+""" Busca los puntos mas cercanos"""
 def close_nodes_points(point,list_points):
     dict_distance = dict()
 
@@ -22,7 +22,7 @@ def close_nodes_points(point,list_points):
     
     return points
 
-
+""" Devuelve nodos de un diccionario de nodos y puntos"""
 def busca_nodos(lista_puntos,dictNodos):
     nodos_encontrados = []
     for i in range(0,len(lista_puntos)):
@@ -32,7 +32,7 @@ def busca_nodos(lista_puntos,dictNodos):
 
     return nodos_encontrados
 
-
+""" Busca las conexiones de un nodo"""
 def search_conexions(node,G):
     nodes_connected = []
     for edge in G.edges:
@@ -43,12 +43,14 @@ def search_conexions(node,G):
 
     return nodes_connected
 
+
+""" Contar conexiones de un nodo """
 def count_conexions_node(node,G):
     list_conexions = search_conexions(node,G)
     #print("count: ",len(list_conexions)," node_start: ",node," conexions: ",list_conexions)
     return len(list_conexions)
 
-
+""" Lista los nodos de llegada para un nodo """
 def list_new_node_end(list_node,number_condition,G):
     list_end = []
     for node in list_node:
@@ -81,34 +83,9 @@ def validar_conexion(node_start,list_node_end,number_conexions,G):
 
         return list_node_end[:number_new_conexions]
 
-
+""" Imprime las conexiones de un nodo """
 def print_conexions(G,list_nodes):
     for node in list_nodes:
         list_conexions = search_conexions(node,G)
         print("count: ",len(list_conexions)," node_start: ",node," conexions: ",list_conexions)
-
-
-def count_conexions_all_nodes():
-    count_edges = []
-    for i in range(0, len(G.nodes)):
-        count_edges.append(0)
-
-    for edge in G.edges:
-        count_edges[edge[0]] += 1
-        count_edges[edge[1]] += 1
-
-    return count_edges
-
-
-"""
-main.py
-"""
-
-
-""" Algoritmo de busqueda BFS and Hill-Climbing """
-
-#node_start = int(input("Start node: "))
-#node_finish = int(input("Finish node: "))
-#option_search_path = int(input("BFS [0]    Hill-CLimbing [1]"))
-
 

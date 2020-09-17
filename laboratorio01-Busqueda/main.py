@@ -45,6 +45,15 @@ for i in range(0,len(list_node_start)):
     for j in range(0,len(lista_node_end)):
         G.add_edge(list_node_start[i],lista_node_end[j])
 
+    edges_reverse = []
+
+    for edge in G.edges:
+        edges_reverse.append((edge[1],edge[0]))
+
+    for edge in G.edges:
+        for j in range(0,len(edges_reverse)):
+            if edge == edges_reverse[j]:
+                G.remove_edge(edges_reverse[j])
 
 
 nx.draw_networkx_nodes(G,pos)
