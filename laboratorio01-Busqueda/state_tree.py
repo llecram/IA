@@ -67,6 +67,9 @@ def buscar_nodo(camino,raiz):
 
 
 def generate_tree(G,nodo_inicial):
+
+    print("...arbol de estados generado")
+    
     path = []
     level = []
 
@@ -168,13 +171,15 @@ def generate_tree(G,nodo_inicial):
 
                 root_temp = root_temp.child[0]
 
-
+    
     return root
 
 
 def busqueda_amplitud(G,nodo_inicial,nodo_objetivo):
     
     tree_root = generate_tree(G,nodo_inicial)
+    
+    print("...buscando el mejor camino")
     root_tmp = tree_root
 
     print_queue = []
@@ -185,9 +190,7 @@ def busqueda_amplitud(G,nodo_inicial,nodo_objetivo):
     print_queue.append([tree_root.key,camino])
 
     while True:
-        print()
-        print("cola caminos: ",print_queue)
-        print()
+        #print("cola caminos: ",print_queue)
 
         if len(queue) == 0:
             return False

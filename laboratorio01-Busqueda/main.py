@@ -66,16 +66,30 @@ nodo_objetivo = int(input("nodo objetivo: "))
 
 camino_found = st_tree.busqueda_amplitud(G,nodo_inicio,nodo_objetivo)
 
+#print("edges: ",camino_edges)
+
 if camino_found == False:
     print("No se encontro camino")
     print()
-    
+
 else:
     print("camino encontrado: ",camino_found)
     print()
+
+    camino_edges = []
+    j=0
+    for i in range(0,len(camino_found)):
+        j += 1
+        edge_tmp = (camino_found[i],camino_found[j])
+        camino_edges.append(edge_tmp)
+
+        if j==len(camino_found)-1:
+            break
+
     nx.draw_networkx_nodes(G,pos)
     nx.draw_networkx_nodes(G,pos,nodelist = camino_found,node_color="green")
     nx.draw_networkx_edges(G,pos)
+    nx.draw_networkx_edges(G,pos,edgelist=camino_edges,edge_color="r")
 
     labels = {}
     for i in range(0,num_nodes):
