@@ -100,50 +100,9 @@ def count_conexions_all_nodes():
     return count_edges
 
 
-"""Iniciando programa"""
-
-G = nx.Graph()
-num_nodes = int(input("Number of nodes: "))
-num_conexions = int(input("Number conexions: "))
-
-
-""" Generando nodos aleatorios que no repiten posicion """
-
-G.add_nodes_from(range(0,num_nodes))
-
-pos = dict()
-i=0
-while len(pos) < num_nodes:
-    xpos = random.randint(0,100)
-    ypos = random.randint(0,100)
-    
-    if (xpos,ypos) not in pos.values():
-        pos[i] = (xpos,ypos)
-        i+=1
-
-""" Conectando nodos a nodos mas cercanos """
-
-list_node_start = [node for node in pos]
-list_points = [point for point in pos.values()]
-
-
-for i in range(0,len(list_node_start)):
-    list_node_edges = close_nodes_points(list_points[i],list_points)
-    lista_node_end = busca_nodos(list_node_edges,pos)
-
-    lista_node_end = validar_conexion(list_node_start[i],lista_node_end,random.randint(1,num_conexions),G)
-
-    #evaluar para no hacer doble enlace
-
-    for j in range(0,len(lista_node_end)):
-        G.add_edge(list_node_start[i],lista_node_end[j])
-
-
-print_conexions(G,G.nodes)
-
-
-nx.draw(G,pos,with_labels=True)
-plt.show()
+"""
+main.py
+"""
 
 
 """ Algoritmo de busqueda BFS and Hill-Climbing """

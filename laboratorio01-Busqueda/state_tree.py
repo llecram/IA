@@ -45,20 +45,6 @@ def printNodeLevelWise(root):
 
 
 
-G = nx.Graph()
-G.add_nodes_from(range(1,7))
-G.add_edge(0,6)
-G.add_edge(0,3)
-G.add_edge(0,5)
-G.add_edge(0,4)
-G.add_edge(1,2)
-G.add_edge(1,4)
-G.add_edge(2,3)
-G.add_edge(2,5)
-G.add_edge(2,4)
-G.add_edge(5,4)
-G.add_edge(5,6)
-
 def buscar_nodo(camino,raiz):
 
     root_temp = raiz
@@ -118,10 +104,11 @@ def generate_tree(G,nodo_inicial):
             ### Si no hay nodos conectados para insertar ###
 
             if len(list_conexions) == 0:
-                
+                """
                 for i in range(0,len(path)):
                     print("camino fuera bucle: ",path[i].key)
                 print()
+                """
 
                 level.append(path.pop())
                 
@@ -169,12 +156,10 @@ def generate_tree(G,nodo_inicial):
                     elif subida == False:
                         break
  
-                print("sali del bucle while padre")
-
             ### Si hay nodos conectados para insertar ###
 
             else:
-                print("nodo crea hijos: ",root_temp.key)
+     
                 for nodo in list_conexions:
                     root_temp.child.append(Node(nodo))
                 
@@ -187,33 +172,48 @@ def generate_tree(G,nodo_inicial):
     return root
 
 
+def busqueda_amplitud(G,nodo_inicial,nodo_objetivo):
+    
+    tree_root = generate_tree(G,nodo_inicial)
+    root_tmp = tree_root
 
-tree_root = generate_tree(G,0)
+    print_queue = []
 
+    queue = []
+    camino = []
+    queue.append([tree_root.key,camino,tree_root])
+    print_queue.append([tree_root.key,camino])
 
+    while True:
+        print()
+        print("cola caminos: ",print_queue)
+        print()
 
-"""
-nodo_inicial = 0
+        if len(queue) == 0:
+            return False
 
-list_conexions = search_conexions(nodo_inicial,G)
+        elif queue[0][0] == nodo_objetivo:
+            queue[0][1].append(nodo_objetivo)
+            return queue[0][1]
+        
+        else:
+            
+            path = []
+            if len(queue[0][1]) == 0:
+                path.append(queue[0][0])
 
-queue = []
-queue.append(nodo_inicial)
-list_conexions = search_conexions(nodo_inicial,G)
+            else:
+                path = queue[0][1].copy()
+                path.append(queue[0][0])
 
-queue.pop(0)
-path = []
-path.append(list_conexions[0])
-path.append(nodo_inicial)
-queue.append(path)
-path.clear()
+            root_tmp = queue[0][2]
 
-def busqueda_amplitud(nodo_inicial,nodo_objetivo,G):
-    pass
+            queue.pop(0)
+            print_queue.pop(0)
+            
+            for i in range(0,len(root_tmp.child)):
+                queue.append([root_tmp.child[i].key,path,root_tmp.child[i]])
+                print_queue.append([root_tmp.child[i].key,path])
 
-"""
+        
 
-"""
-nx.draw(G,with_labels=True)
-plt.show()
-"""
