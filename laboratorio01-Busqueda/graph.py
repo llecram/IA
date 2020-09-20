@@ -61,13 +61,16 @@ def list_new_node_end(list_node,number_condition,G):
 
 
 def validar_conexion(node_start,list_node_end,number_conexions,G):
+    num_conex = number_conexions
+    number_conexions = random.randint(1,number_conexions)
+    
     if len(search_conexions(node_start,G)) == 0:
         
-        list_node_end = list_new_node_end(list_node_end,number_conexions,G)
+        list_node_end = list_new_node_end(list_node_end,num_conex,G)
 
-        return list_node_end[:number_conexions]
+        return list_node_end[:num_conex]
     else:
-        number_new_conexions = number_conexions - len(search_conexions(node_start,G))
+        number_new_conexions = num_conex - len(search_conexions(node_start,G))
         list_conexions = search_conexions(node_start,G)
 
         if len(list_conexions) == number_conexions:
