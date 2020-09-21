@@ -76,6 +76,8 @@ def generate_tree(G,nodo_inicial):
     print("...arbol de estados generando")
     print("demora en minutos por mas cantidad de conexiones")
 
+
+    
     path = []
     level = []
 
@@ -87,7 +89,7 @@ def generate_tree(G,nodo_inicial):
     root_temp = root
 
     while len(path) != 0:
-        
+
         if len(level) == 0:
             break
 
@@ -128,6 +130,11 @@ def generate_tree(G,nodo_inicial):
                 subida = False
     
                 while True:
+                    """
+                    print("root: ",root_temp.key)
+                    for i in path:
+                        print("camino element: ",i.key)
+                    print()"""
                     
                     for i in range(0,len(root_temp.child)):
                         ### Evalua que el nodo padre solo tenga un hijo para buscar padre de ese nodo ###
@@ -177,11 +184,10 @@ def generate_tree(G,nodo_inicial):
 
                 root_temp = root_temp.child[0]
 
-    
     return root
 
 
-def busqueda_amplitud(G,num_nodes,position_node,nodo_inicial,nodo_objetivo):
+def busqueda_amplitud_arbol(G,num_nodes,position_node,nodo_inicial,nodo_objetivo):
     
     start_time = time()
 
@@ -264,7 +270,97 @@ def busqueda_amplitud(G,num_nodes,position_node,nodo_inicial,nodo_objetivo):
         nx.draw_networkx_labels(G,position_node,labels,font_size=12)
 
         plt.show()
+
+
+def busqueda_amplitud_sin_arbol(G,num_nodes,position_node,nodo_inicial,nodo_objetivo):
     
+    start_time = time()
+
+    tree_root = nodo_inicial
+    camino_found = 0
+    print("...buscando el mejor camino")
+    root_tmp = tree_root
+
+    print_queue = []
+
+    queue = []
+    camino = []
+    queue.append([tree_root,camino])
+    print_queue.append([tree_root,camino])
+
+    while True:
+        #print("cola caminos: ",print_queue)
+
+        if len(queue) == 0:
+            camino_found= False
+            break
+
+        elif queue[0][0] == nodo_objetivo:
+            queue[0][1].append(nodo_objetivo)
+            camino_found = queue[0][1]
+            break
+        
+        else:
+            
+            path = []
+            if len(queue[0][1]) == 0:
+                path.append(queue[0][0])
+
+            else:
+                path = queue[0][1].copy()
+                path.append(queue[0][0])
+
+            root_tmp = queue[0][0]
+            list_children = search_conexions(root_tmp,G)
+
+            for j in path:
+                for i in list_children:
+                    if i == j:
+                        list_children.remove(i)
+
+            queue.pop(0)
+            print_queue.pop(0)
+            
+            for i in range(0,len(list_children)):
+                queue.append([list_children[i],path])
+                print_queue.append([list_children[i],path])
+
+
+    elapsed_time = time()- start_time
+    print("Elapsed time for BA: %.10f seconds." % elapsed_time)
+    print()
+
+
+    if camino_found == False:
+        print("No se encontro camino")
+        print()
+
+    else:
+        print("Camino encontrado busqueda amplitud: ",camino_found)
+        print()
+
+        camino_edges = []
+        j=0
+        for i in range(0,len(camino_found)):
+            j += 1
+            edge_tmp = (camino_found[i],camino_found[j])
+            camino_edges.append(edge_tmp)
+
+            if j==len(camino_found)-1:
+                break
+
+        nx.draw_networkx_nodes(G,position_node)
+        nx.draw_networkx_nodes(G,position_node,nodelist = camino_found,node_color="green")
+        nx.draw_networkx_edges(G,position_node)
+        nx.draw_networkx_edges(G,position_node,edgelist=camino_edges,edge_color="r")
+
+        labels = {}
+        for i in range(0,num_nodes):
+            labels[i] = i
+
+        nx.draw_networkx_labels(G,position_node,labels,font_size=12)
+
+        plt.show()
 
 
 def get_key(val,dist_neighbors): 
