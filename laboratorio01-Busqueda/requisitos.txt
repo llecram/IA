@@ -1,4 +1,0 @@
-instalar python3
-instalar pip 
-instalar modulo matplotlib  pip install matplotlib
-instalra modulo networkx    pip install networkx
