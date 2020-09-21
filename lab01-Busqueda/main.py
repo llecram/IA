@@ -122,7 +122,7 @@ while True:
 
         if(opcion_arbol == 1):
             st_tree.busqueda_amplitud_sin_arbol(G,num_nodes,position_node,nodo_inicio,nodo_objetivo)
-            
+
         elif(opcion_arbol == 2):
             st_tree.busqueda_amplitud_arbol(G,num_nodes,position_node,nodo_inicio,nodo_objetivo)
         
@@ -182,11 +182,11 @@ while True:
             opcion_arbol = int(input("Opcion: "))
 
         if(opcion_arbol == 1):
-            st_tree.busqueda_amplitud_sin_arbol(G,num_nodes,position_node,nodo_inicio,nodo_objetivo)
+            st_tree.busqueda_amplitud_sin_arbol(Grafo,n_nodos,pos,nodo_inicio,nodo_objetivo)
         elif(opcion_arbol == 2):
-            st_tree.busqueda_amplitud_arbol(G,num_nodes,position_node,nodo_inicio,nodo_objetivo)
+            st_tree.busqueda_amplitud_arbol(Grafo,n_nodos,pos,nodo_inicio,nodo_objetivo)
         
-        st_tree.hill_climbing(G,num_nodes,nodo_inicio,nodo_objetivo)
+        st_tree.hill_climbing(Grafo,n_nodos,nodo_inicio,nodo_objetivo)
 
 
     elif(opcion_generar_grafo == 3):
