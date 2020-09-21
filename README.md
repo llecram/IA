@@ -8,5 +8,5 @@ Integrantes:
 + python3 
 + pip
 + pip install networkx
-+ pip install amtplotlib
++ pip install matplotlib
 + pip install numpy
