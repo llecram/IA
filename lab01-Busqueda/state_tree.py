@@ -76,7 +76,7 @@ def generate_tree(G,nodo_inicial):
     print("...arbol de estados generando")
     print("demora en minutos por mas cantidad de conexiones")
 
-    contador = 0
+
     
     path = []
     level = []
@@ -183,12 +183,7 @@ def generate_tree(G,nodo_inicial):
                 level.append(root_temp.child[0])
 
                 root_temp = root_temp.child[0]
-        contador += 1
-        print("cont: ",contador)
-        print("len: ",len(path))
-    
-    print("lenf: ",len(path))
-    print("contf: ",contador)
+
     return root
 
 
@@ -317,8 +312,6 @@ def busqueda_amplitud_sin_arbol(G,num_nodes,position_node,nodo_inicial,nodo_obje
 
             root_tmp = queue[0][0]
             list_children = search_conexions(root_tmp,G)
-            for i in list_children:
-                print("padre: ",root_tmp," hijos: ",i)
 
             for j in path:
                 for i in list_children:

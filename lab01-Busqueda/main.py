@@ -110,7 +110,7 @@ while True:
         nodo_objetivo = int(input("nodo objetivo: "))
 
         opcion_arbol = 0
-        while(opcion_arbol == 1 or opcion_arbol==2):
+        while(opcion_arbol != 1 and opcion_arbol!=2):
             print()
             print("+ Busqueda amplitud sin arbol  [1]")
             print(" (se recorre el grafo como arbol a traves de una cola - Rapido, no contruye todo el arbol) ")
@@ -122,6 +122,7 @@ while True:
 
         if(opcion_arbol == 1):
             st_tree.busqueda_amplitud_sin_arbol(G,num_nodes,position_node,nodo_inicio,nodo_objetivo)
+            
         elif(opcion_arbol == 2):
             st_tree.busqueda_amplitud_arbol(G,num_nodes,position_node,nodo_inicio,nodo_objetivo)
         
@@ -170,7 +171,7 @@ while True:
 
 
         opcion_arbol = 0
-        while(opcion_arbol == 1 or opcion_arbol==2):
+        while(opcion_arbol != 1 and opcion_arbol!=2):
             print()
             print("+ Busqueda amplitud sin arbol  [1]")
             print(" (se recorre el grafo como arbol a traves de una cola - Rapido, no contruye todo el arbol) ")
