@@ -1,3 +1,8 @@
+;steps para correr el programa
+;(clear)
+; cargar el archivo
+;(reset)
+;(run)
 (defglobal ?*numero* = (random 0 100))
 (defrule adivinar
 	?h <- (adivinar)
